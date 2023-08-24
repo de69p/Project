@@ -7,21 +7,23 @@ import java.sql.SQLException;
 
 public class ConnectionUtil {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/your_database";
-    private static final String USER = "username";
-    private static final String PASSWORD = "password";
+    private static final String URL = "jdbc:mysql://localhost:3306/SocialMediaApp";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
 
     public static Connection getConnection() {
-        Connection connection = null;
+        Connection connection = null; // Ініціалізуйте змінну як null
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection.setAutoCommit(false);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Помилка під час встановлення з'єднання", e);
         }
         return connection;
     }
+
 
     public static void closeConnection(Connection connection) {
         if (connection != null) {
